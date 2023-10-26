@@ -14,7 +14,6 @@ export default function CodeEditor({code, setCode}: CodeEditorProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
   const editorRef = useRef<HTMLDivElement>(null)
 
-  // Instantiate Monaco Editor
   useEffect(() => {
     const options = {
       value: code,
@@ -36,7 +35,7 @@ export default function CodeEditor({code, setCode}: CodeEditorProps) {
     }
     return () => { editor?.dispose() }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorRef, editor])
+  }, [editorRef])
 
   return <div className="h-[80vh]" ref={editorRef} ></div>
 }

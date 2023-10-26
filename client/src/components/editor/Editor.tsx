@@ -1,9 +1,15 @@
 "use client"
 import { useEffect, useState } from "react";
-import CodeEditor from "./CodeEditor";
+// import CodeEditor from "./CodeEditor";
 import Preview from "./Preview";
 import { defaultDocument } from "./config/editor_config";
+import dynamic from "next/dynamic";
+import PdfTeXEngine from "@/latex/PdfTeXEngine";
 
+const CodeEditor = dynamic(
+    () => import('./CodeEditor'),
+    { ssr: false }
+)
 
 export default function Editor() {
     const [code, setCode] = useState(defaultDocument);
@@ -15,15 +21,13 @@ export default function Editor() {
 
     const [previewScrollPosition, setPreviewScrollPosition] = useState<number>(0);
 
-
-
-    useEffect(() => {
-        if (typeof navigator !== "undefined") {
-            import("@/latex/PdfTeXEngine")
-                .then((mod) => setEngine(new mod.PdfTeXEngine()))
-        }
+    // useEffect(() => {
+    //     if (typeof navigator !== "undefined") {
+    //         import("@/latex/PdfTeXEngine")
+    //             .then((mod) => setEngine(new mod.PdfTeXEngine()))
+    //     }
         
-    }, []);
+    // }, []);
 
     useEffect(() => {
         if (engine) {
@@ -32,6 +36,8 @@ export default function Editor() {
                 console.log(engine.latexWorkerStatus)
                 setReady(true)
             });
+        } else {
+            setEngine(new PdfTeXEngine())
         }
     }, [engine])
 
@@ -61,6 +67,7 @@ export default function Editor() {
         setLoading(false);
         }
     }
+
 
     return (
         <div className="grid grid-cols-2 gap-4 w-full">
