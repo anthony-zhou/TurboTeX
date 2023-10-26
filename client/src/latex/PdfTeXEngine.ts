@@ -22,6 +22,7 @@ export enum EngineStatus {
     Error
 }
 
+
 const ENGINE_PATH = '/swiftlatex/swiftlatexpdftex.js';
 
 export class CompileResult {
@@ -49,7 +50,7 @@ export class PdfTeXEngine {
                 const cmd: string = data['result'] as string;
                 if (cmd === 'ok') {
                     this.latexWorkerStatus = EngineStatus.Ready;
-                    resolve();
+                    resolve("ok");
                 } else {
                     this.latexWorkerStatus = EngineStatus.Error;
                     reject();
@@ -127,7 +128,7 @@ export class PdfTeXEngine {
                     const formatURL = URL.createObjectURL(formatBlob);
                     setTimeout(() => { URL.revokeObjectURL(formatURL); }, 30000);
                     console.log('Download format file via ' + formatURL);
-                    resolve();
+                    resolve("ok");
                 } else {
                     reject(log);
                 }
@@ -184,3 +185,5 @@ export class PdfTeXEngine {
         }
     }
 }
+
+export default PdfTeXEngine;

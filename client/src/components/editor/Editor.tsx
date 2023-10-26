@@ -1,28 +1,39 @@
 "use client"
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CodeEditor from "./CodeEditor";
 import Preview from "./Preview";
-import { EngineStatus, PdfTeXEngine } from "@/latex/PdfTeXEngine";
+import { defaultDocument } from "./config/editor_config";
 
-const engine = new PdfTeXEngine();
 
 export default function Editor() {
-    const [code, setCode] = useState('');
+    const [code, setCode] = useState(defaultDocument);
     const [ready, setReady] = useState(false);
     const [pdfObjectURL, setpdfObjectURL] = useState<string>('');
     const [loading, setLoading] = useState(false);
-    const [dirty, setDirty] = useState(false);
+    const [dirty, setDirty] = useState(true);
+    const [engine, setEngine] = useState<any>();
 
     const [previewScrollPosition, setPreviewScrollPosition] = useState<number>(0);
 
+
+
     useEffect(() => {
-        engine.loadEngine().then(() => {
-            console.log(engine.latexWorkerStatus)
-            setReady(true)
-        });
-        return () => engine.closeWorker()
+        if (typeof navigator !== "undefined") {
+            import("@/latex/PdfTeXEngine")
+                .then((mod) => setEngine(new mod.PdfTeXEngine()))
+        }
+        
     }, []);
 
+    useEffect(() => {
+        if (engine) {
+            engine.loadEngine()
+            .then(() => {
+                console.log(engine.latexWorkerStatus)
+                setReady(true)
+            });
+        }
+    }, [engine])
 
     const compileLatex = (code: string) => {
         setDirty(false);
@@ -32,7 +43,7 @@ export default function Editor() {
         
         engine.writeMemFSFile("main.tex", code);
         engine.setEngineMainFile("main.tex");
-        engine.compileLaTeX().then((r) => {
+        engine.compileLaTeX().then((r: any) => {
             const buffer = r.pdf;
             if (buffer) {
                 const file = new Blob([buffer], {type: 'application/pdf'});
@@ -41,7 +52,7 @@ export default function Editor() {
             }
             setLoading(false);
         })
-        .catch((err) => {
+        .catch((err: any) => {
             console.log(err);
             setLoading(false);
         });        
