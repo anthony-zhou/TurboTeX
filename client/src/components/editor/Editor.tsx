@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import PdfTeXEngine from '@/latex/PdfTeXEngine';
+import { PdfTeXEngine } from '@/latex/PdfTeXEngine';
 import Preview from './Preview';
 import { defaultDocument } from './config/editor_config';
 

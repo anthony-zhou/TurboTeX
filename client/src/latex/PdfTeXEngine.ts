@@ -183,5 +183,3 @@ export class PdfTeXEngine {
     }
   }
 }
-
-export default PdfTeXEngine;
