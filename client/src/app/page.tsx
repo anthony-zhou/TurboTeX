@@ -1,4 +1,4 @@
-import Editor from '../components/editor/Editor'
+import Editor from '../components/editor/Editor';
 
 export default function Home() {
   return (
@@ -7,5 +7,5 @@ export default function Home() {
         <Editor />
       </div>
     </main>
-  )
+  );
 }

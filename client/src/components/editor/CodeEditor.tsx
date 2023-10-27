@@ -1,41 +1,42 @@
-"use client"
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { languageDef } from "./config/editor_config";
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+'use client';
 
+import {
+  Dispatch, SetStateAction, useEffect, useRef, useState,
+} from 'react';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { languageDef } from './config/editor_config';
 
 type CodeEditorProps = {
-    code: string;
-    setCode: Dispatch<SetStateAction<string>>
-}
+  code: string;
+  setCode: Dispatch<SetStateAction<string>>
+};
 
-
-export default function CodeEditor({code, setCode}: CodeEditorProps) {
-  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
-  const editorRef = useRef<HTMLDivElement>(null)
+export default function CodeEditor({ code, setCode }: CodeEditorProps) {
+  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const options = {
       value: code,
-      language: 'latex'
-    }
+      language: 'latex',
+    };
     if (!editor) {
       const myEditor = monaco.editor.create(editorRef.current!, options);
-      if (!monaco.languages.getLanguages().some(({ id }: { id: string} ) => id === 'latex')) {
-        monaco.languages.register({ id: 'latex' })
+      if (!monaco.languages.getLanguages().some(({ id }: { id: string }) => id === 'latex')) {
+        monaco.languages.register({ id: 'latex' });
         // @ts-ignore
-        monaco.languages.setMonarchTokensProvider('latex', languageDef)
+        monaco.languages.setMonarchTokensProvider('latex', languageDef);
       }
 
-      myEditor.getModel()?.onDidChangeContent((e) => {
-        setCode(myEditor.getValue())
+      myEditor.getModel()?.onDidChangeContent((_) => {
+        setCode(myEditor.getValue());
       });
 
-      setEditor(myEditor)
+      setEditor(myEditor);
     }
-    return () => { editor?.dispose() }
+    return () => { editor?.dispose(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorRef])
+  }, [editorRef]);
 
-  return <div className="h-[80vh]" ref={editorRef} ></div>
+  return <div className="h-[80vh]" ref={editorRef} />;
 }
