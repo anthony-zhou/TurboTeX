@@ -4,6 +4,10 @@ import {
   Dispatch, SetStateAction, useEffect, useRef, useState,
 } from 'react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as Y from 'yjs';
+import { WebsocketProvider } from 'y-websocket';
+
+import { MonacoBinding } from 'y-monaco';
 import { languageDef } from './config/editor_config';
 
 type CodeEditorProps = {
@@ -37,6 +41,20 @@ export default function CodeEditor({ code, setCode }: CodeEditorProps) {
     return () => { editor?.dispose(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editorRef]);
+
+  useEffect(() => {
+    if (editor) {
+      const ydocument = new Y.Doc();
+      const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}//localhost:1234`, 'monaco', ydocument);
+      const type = ydocument.getText('monaco');
+      const monacoBinding = new MonacoBinding(
+        type,
+        editor.getModel(),
+        new Set([editor]),
+        provider.awareness,
+      );
+    }
+  }, [editor]);
 
   return <div className="h-[80vh]" ref={editorRef} />;
 }
