@@ -19,7 +19,7 @@ type CodeEditorProps = {
 
 const ydocument = new Y.Doc();
 // eslint-disable-next-line no-restricted-globals
-const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}//localhost:1234`, 'monaco', ydocument);
+const provider = new WebsocketProvider('ws://54.208.125.226:80', 'my-roomname', ydocument);
 
 export default function CodeEditor({ code, setCode }: CodeEditorProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null);
