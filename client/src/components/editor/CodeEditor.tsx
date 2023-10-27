@@ -5,6 +5,8 @@ import {
 } from 'react';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import * as Y from 'yjs';
+// TODO: remove this ts-ignore once https://github.com/yjs/y-websocket/pull/138 gets merged.
+// @ts-ignore
 import { WebsocketProvider } from 'y-websocket';
 
 import { MonacoBinding } from 'y-monaco';
@@ -15,12 +17,16 @@ type CodeEditorProps = {
   setCode: Dispatch<SetStateAction<string>>
 };
 
+const ydocument = new Y.Doc();
+// eslint-disable-next-line no-restricted-globals
+const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}//localhost:1234`, 'monaco', ydocument);
+
 export default function CodeEditor({ code, setCode }: CodeEditorProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null);
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const options = {
+    const options: monaco.editor.IStandaloneEditorConstructionOptions = {
       value: code,
       language: 'latex',
     };
@@ -44,15 +50,15 @@ export default function CodeEditor({ code, setCode }: CodeEditorProps) {
 
   useEffect(() => {
     if (editor) {
-      const ydocument = new Y.Doc();
-      const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}//localhost:1234`, 'monaco', ydocument);
       const type = ydocument.getText('monaco');
+
       const monacoBinding = new MonacoBinding(
         type,
-        editor.getModel(),
+        editor.getModel()!,
         new Set([editor]),
         provider.awareness,
       );
+      console.log(monacoBinding.editors);
     }
   }, [editor]);
 
