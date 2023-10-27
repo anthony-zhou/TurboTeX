@@ -1,8 +1,14 @@
-'use client';
-
+import { getServerSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import authOptions from './_utils/options';
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    redirect('/dashboard');
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
       <div className="z-10 w-full items-center justify-center font-mono text-sm lg:flex">
