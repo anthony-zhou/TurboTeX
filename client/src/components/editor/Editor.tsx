@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-// import CodeEditor from "./CodeEditor";
 import dynamic from 'next/dynamic';
+import PdfTeXEngine from '@/latex/PdfTeXEngine';
 import Preview from './Preview';
 import { defaultDocument } from './config/editor_config';
-import PdfTeXEngine from '@/latex/PdfTeXEngine';
 
 const CodeEditor = dynamic(
   () => import('./CodeEditor'),
