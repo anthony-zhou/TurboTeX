@@ -1,6 +1,6 @@
 # TurboTeX
 
-TurboTeX collaborative LaTeX editor in the browser. 
+TurboTeX is a fast collaborative LaTeX editor in the browser. 
 
 ## Current state of the project
 
