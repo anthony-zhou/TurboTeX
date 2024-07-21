@@ -12,7 +12,7 @@ However, the first compilation is slower because the website has to download the
 
 On another branch (`anthony/collab`) is a simple patch to make the editor collaborative using `yjs` (a library for shared data types) and websockets. However, this requires a running instance of a `yjs` websocket server. 
 
-I have currently stopped working on the project, because I no longer need to write many LaTeX documents. 
+I have currently stopped working on the project, because I no longer write many LaTeX documents. 
 I would recommend [Typst](https://typst.app/) for anyone who wants to produce typset mathematics and doesn't have a specific need for LaTeX. 
 That said, I am happy to share what I've learned with anyone who is working on a related project. 
 
