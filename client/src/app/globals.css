@@ -6,3 +6,24 @@ html {
   background: rgb(63,94,251);
   background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(88,91,232,1) 27%, rgba(252,70,107,1) 100%);
 }
+
+/* yjs styles */
+.yRemoteSelection {
+  background-color: rgb(250, 129, 0, .5)
+}
+.yRemoteSelectionHead {
+  position: absolute;
+  border-left: orange solid 2px;
+  border-top: orange solid 2px;
+  border-bottom: orange solid 2px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.yRemoteSelectionHead::after {
+  position: absolute;
+  content: ' ';
+  border: 3px solid orange;
+  border-radius: 4px;
+  left: -4px;
+  top: -5px;
+}

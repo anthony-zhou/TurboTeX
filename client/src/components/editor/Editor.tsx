@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { PdfTeXEngine } from '@/latex/PdfTeXEngine';
 import Preview from './Preview';
-import { defaultDocument } from './config/editor_config';
+// import { defaultDocument } from './config/editor_config';
 
 const CodeEditor = dynamic(
   () => import('./CodeEditor'),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="bg-white h-[80vh] w-full" /> },
 );
 
 export default function Editor() {
-  const [code, setCode] = useState(defaultDocument);
+  const [code, setCode] = useState('');
   const [ready, setReady] = useState(false);
   const [pdfObjectURL, setpdfObjectURL] = useState<string>('');
   const [loading, setLoading] = useState(false);

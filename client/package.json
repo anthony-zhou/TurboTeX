@@ -11,11 +11,16 @@
   "dependencies": {
     "@wojtekmaj/react-hooks": "^1.18.1",
     "monaco-editor": "^0.44.0",
+    "monaco-editor-webpack-plugin": "^7.1.0",
     "next": "13.5.6",
     "next-auth": "^4.24.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-pdf": "^7.5.1"
+    "react-pdf": "^7.5.1",
+    "y-monaco": "^0.1.4",
+    "y-webrtc": "^10.2.5",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.6.8"
   },
   "devDependencies": {
     "@types/node": "^20",
